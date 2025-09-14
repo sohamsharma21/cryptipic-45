@@ -271,8 +271,6 @@ npm run test:performance
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
-
 ### Documentation
 - **User Manual**: Built-in help system
 - **API Documentation**: Comprehensive API docs
