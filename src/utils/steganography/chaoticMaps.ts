@@ -170,17 +170,26 @@ export class ChaoticSequenceGenerator {
   }
 
   /**
-   * Generate a chaotic sequence for embedding positions
+   * Generate a chaotic sequence for embedding positions with security enhancements
    */
-  generateEmbeddingPositions(
+  async generateEmbeddingPositions(
     totalPositions: number, 
     requiredPositions: number,
     password?: string
-  ): number[] {
-    // Use password to generate reproducible seed if provided
+  ): Promise<number[]> {
+    // Security: Validate inputs
+    if (totalPositions <= 0 || requiredPositions <= 0) {
+      throw new Error('Invalid position parameters');
+    }
+    
+    if (requiredPositions > totalPositions * 0.25) {
+      throw new Error('Required positions exceed safe embedding capacity');
+    }
+
+    // Use secure password-to-seed conversion if password provided
     let seed = this.options.seed;
     if (password) {
-      seed = this.passwordToSeed(password);
+      seed = await this.passwordToSeed(password);
     }
 
     let sequence: number[] = [];
@@ -235,26 +244,48 @@ export class ChaoticSequenceGenerator {
   }
 
   /**
-   * Convert password string to normalized seed value
+   * Security: Secure password-to-seed conversion using crypto primitives
    */
-  private passwordToSeed(password: string): number {
-    let hash = 0;
-    for (let i = 0; i < password.length; i++) {
-      const char = password.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash; // Convert to 32-bit integer
+  private async passwordToSeed(password: string): Promise<number> {
+    try {
+      // Use Web Crypto API for secure hashing
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password + 'chaotic-salt-v2');
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = new Uint8Array(hashBuffer);
+      
+      // Convert first 4 bytes to number and normalize
+      let hash = 0;
+      for (let i = 0; i < 4; i++) {
+        hash = (hash << 8) | hashArray[i];
+      }
+      
+      // Normalize to (0, 1) range, avoiding exactly 0 or 1
+      const normalized = (Math.abs(hash) % 999999) / 1000000 + 0.000001;
+      return normalized;
+    } catch (error) {
+      // Fallback to less secure but compatible method
+      console.warn('Crypto API unavailable, using fallback hash');
+      let hash = 0;
+      for (let i = 0; i < password.length; i++) {
+        const char = password.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+      }
+      return (Math.abs(hash) % 999999) / 1000000 + 0.000001;
     }
-    
-    // Normalize to (0, 1) range, avoiding exactly 0 or 1
-    const normalized = (Math.abs(hash) % 999999) / 1000000 + 0.000001;
-    return normalized;
   }
 
   /**
-   * Generate chaotic key stream for encryption enhancement
+   * Generate chaotic key stream for encryption enhancement with security improvements
    */
-  generateKeyStream(length: number, password?: string): Uint8Array {
-    const seed = password ? this.passwordToSeed(password) : this.options.seed;
+  async generateKeyStream(length: number, password?: string): Promise<Uint8Array> {
+    // Security: Validate length
+    if (length <= 0 || length > 1048576) { // Max 1MB
+      throw new Error('Invalid key stream length');
+    }
+
+    const seed = password ? await this.passwordToSeed(password) : this.options.seed;
     const logistic = new LogisticMap(seed, 3.99);
     
     const keyStream = new Uint8Array(length);

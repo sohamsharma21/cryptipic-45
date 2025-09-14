@@ -322,7 +322,7 @@ export class EnhancedDefenseSteganography {
   }
 
   /**
-   * Embed data in image using hybrid algorithms
+   * Embed data in image using hybrid algorithms with security enhancements
    */
   private async embedInImage(
     imageFile: File,
@@ -330,13 +330,24 @@ export class EnhancedDefenseSteganography {
     password: string,
     options: SteganographyOptions
   ): Promise<{ encodedImage: string; metadata: any }> {
+    // Security: Validate file type and size
+    if (!this.validateImageFile(imageFile)) {
+      throw new Error('Invalid image file type or size');
+    }
+
     return new Promise((resolve, reject) => {
       const img = new Image();
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
+      let objectUrl: string | null = null;
 
-      img.onload = () => {
+      img.onload = async () => {
         try {
+          // Security: Validate image dimensions
+          if (img.width > 4096 || img.height > 4096) {
+            throw new Error('Image dimensions too large for security');
+          }
+
           canvas.width = img.width;
           canvas.height = img.height;
 
@@ -345,7 +356,7 @@ export class EnhancedDefenseSteganography {
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
             // Use hybrid steganography
-            const embeddingResult = this.hybridSteganography.encode(
+            const embeddingResult = await this.hybridSteganography.encode(
               imageData.data,
               data,
               password,
@@ -366,33 +377,57 @@ export class EnhancedDefenseSteganography {
               metadata: embeddingResult.metadata
             });
           } else {
-            reject(new Error('Failed to get canvas context'));
+            reject(new Error('Canvas context unavailable'));
           }
         } catch (error) {
-          reject(error);
+          // Security: Don't expose internal error details
+          debugLog('Image embedding error:', error);
+          reject(new Error('Image processing failed'));
+        } finally {
+          // Security: Clean up object URL to prevent memory leaks
+          if (objectUrl) {
+            URL.revokeObjectURL(objectUrl);
+          }
         }
       };
 
-      img.onerror = () => reject(new Error('Failed to load image'));
-      img.src = URL.createObjectURL(imageFile);
+      img.onerror = () => {
+        if (objectUrl) URL.revokeObjectURL(objectUrl);
+        reject(new Error('Image loading failed'));
+      };
+
+      // Security: Create and track object URL for cleanup
+      objectUrl = URL.createObjectURL(imageFile);
+      img.src = objectUrl;
     });
   }
 
   /**
-   * Extract data from image using hybrid algorithms
+   * Extract data from image using hybrid algorithms with security enhancements
    */
   private async extractFromImage(
     imageFile: File,
     password: string,
     options: Partial<SteganographyOptions>
   ): Promise<string> {
+    // Security: Validate file before processing
+    if (!this.validateImageFile(imageFile)) {
+      throw new Error('Invalid image file');
+    }
+
     return new Promise((resolve, reject) => {
       const img = new Image();
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
+      let objectUrl: string | null = null;
 
-      img.onload = () => {
+      img.onload = async () => {
         try {
+          // Security: Validate dimensions
+          if (img.width > 4096 || img.height > 4096) {
+            throw new Error('Image too large');
+          }
+
           canvas.width = img.width;
           canvas.height = img.height;
 
@@ -412,7 +447,7 @@ export class EnhancedDefenseSteganography {
               ...options
             };
 
-            const { message } = this.hybridSteganography.decode(
+            const { message } = await this.hybridSteganography.decode(
               imageData.data,
               password,
               extractionOptions,
@@ -422,16 +457,52 @@ export class EnhancedDefenseSteganography {
 
             resolve(message);
           } else {
-            reject(new Error('Failed to get canvas context'));
+            reject(new Error('Canvas context unavailable'));
           }
         } catch (error) {
-          reject(error);
+          // Security: Don't expose detailed error information
+          debugLog('Image extraction error:', error);
+          reject(new Error('Extraction failed'));
+        } finally {
+          // Security: Clean up resources
+          if (objectUrl) {
+            URL.revokeObjectURL(objectUrl);
+          }
         }
       };
 
-      img.onerror = () => reject(new Error('Failed to load image'));
-      img.src = URL.createObjectURL(imageFile);
+      img.onerror = () => {
+        if (objectUrl) URL.revokeObjectURL(objectUrl);
+        reject(new Error('Image loading failed'));
+      };
+
+      objectUrl = URL.createObjectURL(imageFile);
+      img.src = objectUrl;
     });
+  }
+
+  /**
+   * Security: Validate image file type and size
+   */
+  private validateImageFile(file: File): boolean {
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      return false;
+    }
+
+    // Validate file size (max 10MB)
+    const maxSize = 10 * 1024 * 1024;
+    if (file.size > maxSize) {
+      return false;
+    }
+
+    // Validate file name
+    if (!/^[a-zA-Z0-9._-]+\.(jpg|jpeg|png|webp)$/i.test(file.name)) {
+      return false;
+    }
+
+    return true;
   }
 
   /**

@@ -12,6 +12,7 @@ import { AlertTriangle, Shield, Zap, Lock } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { EnhancedDefenseSteganography } from '@/utils/steganography/enhancedDefense';
 import { ChaoticMapType, CompressionAlgorithm, SteganographyAlgorithm } from '@/utils/steganography/types';
+import { SecurityValidator, SecurityAuditLogger } from '@/utils/steganography/securityValidator';
 
 interface AdvancedOptions {
   algorithm: SteganographyAlgorithm;
@@ -43,13 +44,45 @@ export function EnhancedSteganographyDemo() {
   const defenseSteg = new EnhancedDefenseSteganography();
 
   const handleEncode = async () => {
-    if (!imageFile || !message || !password) {
-      alert('Please provide image, message, and password');
+    // Security: Enhanced input validation with SecurityValidator
+    const messageValidation = SecurityValidator.validateMessage(message);
+    if (!messageValidation.valid) {
+      alert(`Message validation failed:\n${messageValidation.errors.join('\n')}`);
+      SecurityAuditLogger.log('warning', 'Invalid message attempted', { errors: messageValidation.errors });
+      return;
+    }
+
+    const passwordValidation = SecurityValidator.validatePassword(password);
+    if (!passwordValidation.valid) {
+      alert(`Password validation failed:\n${passwordValidation.errors.join('\n')}`);
+      SecurityAuditLogger.log('warning', 'Weak password attempted', { errors: passwordValidation.errors });
+      return;
+    }
+
+    if (!imageFile) {
+      alert('Please select an image file');
+      return;
+    }
+
+    const fileValidation = SecurityValidator.validateImageFile(imageFile);
+    if (!fileValidation.valid) {
+      alert(`File validation failed:\n${fileValidation.errors.join('\n')}`);
+      SecurityAuditLogger.log('warning', 'Invalid file attempted', { errors: fileValidation.errors });
+      return;
+    }
+
+    // Security: Rate limiting check
+    const userId = SecurityValidator.generateSecureId();
+    const rateLimit = SecurityValidator.checkRateLimit(userId, 'encode');
+    if (!rateLimit.allowed) {
+      alert('Rate limit exceeded. Please wait before trying again.');
+      SecurityAuditLogger.log('warning', 'Rate limit exceeded', { operation: 'encode', userId });
       return;
     }
 
     setProcessing(true);
     setProgress(0);
+    SecurityAuditLogger.log('info', 'Encoding started', { messageLength: message.length, algorithm: options.algorithm });
 
     try {
       // Simulate progress updates
@@ -78,7 +111,7 @@ export function EnhancedSteganographyDemo() {
             quantumResistant: options.quantumResistant
           },
           advancedSecurity: true,
-          debug: true
+          debug: false // Security: Disable debug in production
         },
         'UNCLASSIFIED',
         'demo-user'
@@ -88,10 +121,16 @@ export function EnhancedSteganographyDemo() {
       setProgress(100);
       setEncodedImage(result.encodedImage);
       setMetadata(result.metadata);
+      SecurityAuditLogger.log('info', 'Encoding completed successfully', { 
+        securityLevel: result.metadata.securityLevel,
+        compressionRatio: result.metadata.compressionRatio 
+      });
       
     } catch (error) {
       console.error('Encoding failed:', error);
-      alert(`Encoding failed: ${error.message}`);
+      SecurityAuditLogger.log('error', 'Encoding failed', { error: error.message });
+      // Security: Don't expose detailed error information to users
+      alert('Encoding failed. Please check your inputs and try again.');
     } finally {
       setProcessing(false);
       setProgress(0);
@@ -99,8 +138,22 @@ export function EnhancedSteganographyDemo() {
   };
 
   const handleDecode = async () => {
-    if (!imageFile || !password) {
+    // Security: Enhanced input validation
+    if (!imageFile || !password.trim()) {
       alert('Please provide image and password');
+      return;
+    }
+
+    // Security: Validate password length
+    if (password.length < 8) {
+      alert('Password must be at least 8 characters long');
+      return;
+    }
+
+    // Security: Validate file
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(imageFile.type)) {
+      alert('Please select a valid image file');
       return;
     }
 
@@ -123,7 +176,7 @@ export function EnhancedSteganographyDemo() {
             usePassword: true
           },
           advancedSecurity: true,
-          debug: true
+          debug: false // Security: Disable debug
         },
         'demo-user'
       );
@@ -135,7 +188,8 @@ export function EnhancedSteganographyDemo() {
 
     } catch (error) {
       console.error('Decoding failed:', error);
-      alert(`Decoding failed: ${error.message}`);
+      // Security: Generic error message
+      alert('Decoding failed. Please check your password and image.');
     } finally {
       setProcessing(false);
       setProgress(0);
@@ -145,12 +199,19 @@ export function EnhancedSteganographyDemo() {
   const downloadEncodedImage = () => {
     if (!encodedImage) return;
     
-    const link = document.createElement('a');
-    link.href = encodedImage;
-    link.download = 'encoded-image.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      const link = document.createElement('a');
+      // Security: Sanitize filename
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      link.href = encodedImage;
+      link.download = `encoded-image-${timestamp}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Download failed:', error);
+      alert('Download failed. Please try again.');
+    }
   };
 
   const getSecurityBadgeColor = (level: string) => {

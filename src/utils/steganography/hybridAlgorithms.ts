@@ -36,14 +36,14 @@ export class AdaptiveHybridSteganography {
   /**
    * Encode message using adaptive hybrid approach
    */
-  encode(
+  async encode(
     data: Uint8ClampedArray,
     message: string,
     password: string | undefined,
     options: SteganographyOptions,
     width: number,
     height: number
-  ): HybridEmbeddingResult {
+  ): Promise<HybridEmbeddingResult> {
     try {
       debugLog('Starting adaptive hybrid encoding', null, options);
 
@@ -63,7 +63,7 @@ export class AdaptiveHybridSteganography {
       const strategy = this.selectEmbeddingStrategy(imageAnalysis, messageAnalysis, options);
 
       // Step 5: Generate chaotic embedding positions
-      const embeddingPositions = this.generateChaoticPositions(
+      const embeddingPositions = await this.generateChaoticPositions(
         width * height,
         compressionResult.compressedData.length * 8 + 256, // Extra space for metadata
         password,
@@ -101,13 +101,13 @@ export class AdaptiveHybridSteganography {
   /**
    * Decode message using adaptive hybrid approach
    */
-  decode(
+  async decode(
     data: Uint8ClampedArray,
     password: string | undefined,
     options: SteganographyOptions,
     width: number,
     height: number
-  ): { message: string; metadata: any } {
+  ): Promise<{ message: string; metadata: any }> {
     try {
       debugLog('Starting adaptive hybrid decoding', null, options);
 
@@ -115,7 +115,7 @@ export class AdaptiveHybridSteganography {
       const metadata = this.extractEmbeddedMetadata(data, password, options, width, height);
 
       // Step 2: Regenerate chaotic positions
-      const embeddingPositions = this.generateChaoticPositions(
+      const embeddingPositions = await this.generateChaoticPositions(
         width * height,
         metadata.messageLength,
         password,
@@ -270,14 +270,14 @@ export class AdaptiveHybridSteganography {
   }
 
   /**
-   * Generate chaotic embedding positions
+   * Generate chaotic embedding positions with async support
    */
-  private generateChaoticPositions(
+  private async generateChaoticPositions(
     totalPositions: number,
     requiredBits: number,
     password: string | undefined,
     options: SteganographyOptions
-  ): number[] {
+  ): Promise<number[]> {
     if (options.chaotic) {
       this.chaoticGenerator = new ChaoticSequenceGenerator({
         mapType: options.chaotic.mapType,
@@ -286,7 +286,7 @@ export class AdaptiveHybridSteganography {
       });
     }
 
-    const positions = this.chaoticGenerator.generateEmbeddingPositions(
+    const positions = await this.chaoticGenerator.generateEmbeddingPositions(
       totalPositions,
       Math.ceil(requiredBits / 3), // Account for RGB channels
       password
