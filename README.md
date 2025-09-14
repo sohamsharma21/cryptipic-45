@@ -271,8 +271,6 @@ npm run test:performance
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
-
 ### Documentation
 - **User Manual**: Built-in help system
 - **API Documentation**: Comprehensive API docs
@@ -281,8 +279,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Contact
 - **Issues**: GitHub Issues for bug reports
-- **Security**: security@cryptipic.com for security issues
-- **Support**: support@cryptipic.com for general support
+- **Security**: sohamsharmapcm@gmail.com for security issues
+- **Support**: sohamsharampcm@gmail.com for general support
 
 ## 🏆 Achievements
 
