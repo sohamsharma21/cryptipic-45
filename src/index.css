@@ -1,0 +1,362 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --crypti-neon-blue: 0, 255, 255;
+  --crypti-dark-bg: 10, 15, 25;
+  --crypti-light-blue: 224, 242, 254;
+  --crypti-glow: 0, 240, 255;
+  --crypti-secondary: 0, 210, 210;
+  --crypti-purple: 147, 51, 234;
+  --crypti-dark-purple: 88, 28, 135;
+  --crypti-soft-blue: 191, 219, 254;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 180 100% 50%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 180 100% 50%;
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 215 28% 17%;
+    --foreground: 210 40% 98%;
+    --card: 215 28% 17%;
+    --card-foreground: 210 40% 98%;
+    --popover: 215 28% 17%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 180 100% 50%;
+    --primary-foreground: 215 28% 17%;
+    --secondary: 215 28% 25%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 215 28% 25%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 215 28% 25%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 215 28% 25%;
+    --input: 215 28% 25%;
+    --ring: 180 100% 50%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Defense-specific styling */
+.security-banner {
+  @apply font-bold text-center py-2 px-4 border-2;
+}
+
+.security-banner.unclassified {
+  @apply bg-green-100 border-green-500 text-green-800;
+}
+
+.security-banner.cui {
+  @apply bg-purple-100 border-purple-500 text-purple-800;
+}
+
+.security-banner.confidential {
+  @apply bg-blue-100 border-blue-500 text-blue-800;
+}
+
+.security-banner.secret {
+  @apply bg-red-100 border-red-500 text-red-800;
+}
+
+.security-banner.top-secret {
+  @apply bg-orange-100 border-orange-500 text-orange-800;
+}
+
+.dark .security-banner.unclassified {
+  @apply bg-green-900/50 border-green-400 text-green-200;
+}
+
+.dark .security-banner.cui {
+  @apply bg-purple-900/50 border-purple-400 text-purple-200;
+}
+
+.dark .security-banner.confidential {
+  @apply bg-blue-900/50 border-blue-400 text-blue-200;
+}
+
+.dark .security-banner.secret {
+  @apply bg-red-900/50 border-red-400 text-red-200;
+}
+
+.dark .security-banner.top-secret {
+  @apply bg-orange-900/50 border-orange-400 text-orange-200;
+}
+
+.role-indicator {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.role-indicator.admin {
+  @apply bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-200;
+}
+
+.role-indicator.supervisor {
+  @apply bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200;
+}
+
+.role-indicator.operator {
+  @apply bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200;
+}
+
+.role-indicator.viewer {
+  @apply bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200;
+}
+
+.audit-log-entry {
+  @apply p-3 border rounded-lg mb-2 bg-card text-card-foreground;
+}
+
+.audit-log-entry.success {
+  @apply border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20;
+}
+
+.audit-log-entry.failure {
+  @apply border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20;
+}
+
+.security-tip {
+  @apply bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4 dark:bg-blue-900/20 dark:border-blue-800;
+}
+
+.quick-start-guide {
+  @apply bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4 dark:bg-gray-800 dark:border-gray-700;
+}
+
+/* Accessibility improvements */
+.focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .security-banner {
+    @apply text-sm py-1 px-2;
+  }
+  
+  .role-indicator {
+    @apply text-xs px-2 py-1;
+  }
+}
+
+/* Ensure proper contrast for all text */
+.text-high-contrast {
+  color: hsl(var(--foreground));
+}
+
+.text-medium-contrast {
+  color: hsl(var(--muted-foreground));
+}
+
+/* Override any problematic color combinations */
+.card {
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+}
+
+.bg-crypti-gradient {
+  @apply bg-gradient-to-r from-[rgb(var(--crypti-neon-blue))] to-[rgb(var(--crypti-glow))];
+}
+
+.text-crypti-neon {
+  color: rgb(var(--crypti-neon-blue));
+}
+
+.text-crypti-darkBg {
+  color: rgb(var(--crypti-dark-bg));
+}
+
+.text-crypti-darkPurple {
+  color: rgb(var(--crypti-dark-purple));
+}
+
+.text-crypti-purple {
+  color: rgb(var(--crypti-purple));
+}
+
+.bg-crypti-neon {
+  background-color: rgb(var(--crypti-neon-blue));
+}
+
+.bg-crypti-darkBg {
+  background-color: rgb(var(--crypti-dark-bg));
+}
+
+.bg-crypti-neon\/80 {
+  background-color: rgba(var(--crypti-neon-blue), 0.8);
+}
+
+.bg-crypti-neon\/20 {
+  background-color: rgba(var(--crypti-neon-blue), 0.2);
+}
+
+.bg-crypti-neon\/10 {
+  background-color: rgba(var(--crypti-neon-blue), 0.1);
+}
+
+.bg-crypti-lightBlue {
+  background-color: rgb(var(--crypti-light-blue));
+}
+
+.bg-crypti-lightBlue\/50 {
+  background-color: rgba(var(--crypti-light-blue), 0.5);
+}
+
+.bg-crypti-lightBlue\/30 {
+  background-color: rgba(var(--crypti-light-blue), 0.3);
+}
+
+.bg-crypti-softBlue {
+  background-color: rgb(var(--crypti-soft-blue));
+}
+
+.bg-crypti-softBlue\/30 {
+  background-color: rgba(var(--crypti-soft-blue), 0.3);
+}
+
+.bg-crypti-purple\/10 {
+  background-color: rgba(var(--crypti-purple), 0.1);
+}
+
+.hover\:bg-crypti-neon\/90:hover {
+  background-color: rgba(var(--crypti-neon-blue), 0.9);
+}
+
+.hover\:bg-crypti-neon\/80:hover {
+  background-color: rgba(var(--crypti-neon-blue), 0.8);
+}
+
+.hover\:bg-crypti-neon\/20:hover {
+  background-color: rgba(var(--crypti-neon-blue), 0.2);
+}
+
+.hover\:bg-crypti-neon\/10:hover {
+  background-color: rgba(var(--crypti-neon-blue), 0.1);
+}
+
+.hover\:text-crypti-neon:hover {
+  color: rgb(var(--crypti-neon-blue));
+}
+
+.border-crypti-neon {
+  border-color: rgb(var(--crypti-neon-blue));
+}
+
+.border-crypti-neon\/10 {
+  border-color: rgba(var(--crypti-neon-blue), 0.1);
+}
+
+.border-crypti-neon\/20 {
+  border-color: rgba(var(--crypti-neon-blue), 0.2);
+}
+
+.border-crypti-neon\/30 {
+  border-color: rgba(var(--crypti-neon-blue), 0.3);
+}
+
+.border-crypti-neon\/40 {
+  border-color: rgba(var(--crypti-neon-blue), 0.4);
+}
+
+.border-crypti-purple\/10 {
+  border-color: rgba(var(--crypti-purple), 0.1);
+}
+
+.shadow-glow {
+  box-shadow: 0 0 15px 2px rgba(var(--crypti-neon-blue), 0.4);
+}
+
+.shadow-glow-lg {
+  box-shadow: 0 0 25px 5px rgba(var(--crypti-neon-blue), 0.5);
+}
+
+.text-glow {
+  text-shadow: 0 0 8px rgba(var(--crypti-neon-blue), 0.7);
+}
+
+/* Keep existing dark mode overrides but improve contrast */
+.dark .dark\:text-white {
+  color: white;
+}
+
+.dark .dark\:text-white\/80 {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.dark .dark\:bg-gray-900 {
+  background-color: rgb(17, 24, 39);
+}
+
+.dark .dark\:bg-gray-800\/50 {
+  background-color: rgba(31, 41, 55, 0.5);
+}
+
+.dark .dark\:bg-gray-700 {
+  background-color: rgb(55, 65, 81);
+}
+
+.dark .dark\:bg-gray-700\/70 {
+  background-color: rgba(55, 65, 81, 0.7);
+}
+
+.dark .dark\:border-gray-700 {
+  border-color: rgb(55, 65, 81);
+}
+
+.dark .dark\:border-gray-600 {
+  border-color: rgb(75, 85, 99);
+}
+
+.dark .dark\:text-gray-400 {
+  color: rgb(156, 163, 175);
+}
+
+.dark .dark\:text-gray-200 {
+  color: rgb(229, 231, 235);
+}
+
+.dark .dark\:from-crypti-purple\/30 {
+  --tw-gradient-from: rgba(var(--crypti-purple), 0.3) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgba(var(--crypti-purple), 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.dark .dark\:to-gray-800\/50 {
+  --tw-gradient-to: rgba(31, 41, 55, 0.5) var(--tw-gradient-to-position);
+}
