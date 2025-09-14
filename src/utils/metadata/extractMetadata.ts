@@ -12,6 +12,13 @@ import {
 // Main function to extract metadata from an image file
 export const extractMetadata = async (file: File): Promise<Metadata> => {
   try {
+    console.log('[Metadata] Extracting metadata from:', file.name, 'Size:', file.size);
+    
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      throw new Error('File is not an image');
+    }
+
     // Get all possible metadata with extended options
     const allTags = await exifr.parse(file, { 
       tiff: true, 
@@ -23,10 +30,19 @@ export const extractMetadata = async (file: File): Promise<Metadata> => {
       exif: true,
       gps: true,
       makerNote: true,
-      userComment: true
+      userComment: true,
+      mergeOutput: true,
+      translateKeys: true,
+      translateValues: true
+    }).catch((error) => {
+      console.warn('[Metadata] Partial extraction failed:', error);
+      return null;
     });
     
-    const gps = await exifr.gps(file).catch(() => null);
+    const gps = await exifr.gps(file).catch(() => {
+      console.log('[Metadata] GPS data not available');
+      return null;
+    });
     
     let metadata: Metadata = {};
     

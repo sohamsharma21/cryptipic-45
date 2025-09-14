@@ -5,28 +5,40 @@
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0f172a",
-  "theme_color": "#3b82f6",
+  "theme_color": "#0f172a",
   "orientation": "portrait-primary",
   "scope": "/",
   "categories": ["security", "productivity", "utilities"],
   "lang": "en-US",
   "icons": [
     {
-      "src": "/lovable-uploads/390e3f59-0f90-4390-a0eb-d404f3b7abaf.png",
+      "src": "/images/favicon.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "/lovable-uploads/6a7770e9-8262-4451-a248-72435e52e946.png",
+      "src": "/images/favicon.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/Uplode_img/6a7770e9-8262-4451-a248-72435e52e946.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/Uplode_img/6a7770e9-8262-4451-a248-72435e52e946.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "screenshots": [
     {
-      "src": "/lovable-uploads/390e3f59-0f90-4390-a0eb-d404f3b7abaf.png",
+      "src": "/images/favicon.png",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide"
@@ -40,7 +52,7 @@
       "url": "/hide",
       "icons": [
         {
-          "src": "/lovable-uploads/390e3f59-0f90-4390-a0eb-d404f3b7abaf.png",
+          "src": "/images/favicon.png",
           "sizes": "192x192"
         }
       ]
@@ -52,7 +64,7 @@
       "url": "/reveal",
       "icons": [
         {
-          "src": "/lovable-uploads/390e3f59-0f90-4390-a0eb-d404f3b7abaf.png",
+          "src": "/images/favicon.png",
           "sizes": "192x192"
         }
       ]
@@ -64,7 +76,7 @@
       "url": "/defense",
       "icons": [
         {
-          "src": "/lovable-uploads/390e3f59-0f90-4390-a0eb-d404f3b7abaf.png",
+          "src": "/images/favicon.png",
           "sizes": "192x192"
         }
       ]

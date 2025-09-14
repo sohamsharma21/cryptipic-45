@@ -31,15 +31,41 @@ export class BiometricAuth {
    * Check if biometric authentication is available
    */
   static async isAvailable(): Promise<boolean> {
-    if (!this.isSupported()) return false;
+    if (!this.isSupported()) {
+      console.log('[Biometric] WebAuthn not supported on this device');
+      return false;
+    }
 
     try {
       const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+      console.log('[Biometric] Platform authenticator available:', available);
       return available;
     } catch (error) {
       console.warn('[Biometric] Availability check failed:', error);
       return false;
     }
+  }
+
+  /**
+   * Get biometric authentication status with detailed info
+   */
+  static async getStatus(): Promise<{
+    supported: boolean;
+    available: boolean;
+    fallback: boolean;
+    message: string;
+  }> {
+    const supported = this.isSupported();
+    const available = supported ? await this.isAvailable() : false;
+    
+    return {
+      supported,
+      available,
+      fallback: !available,
+      message: supported 
+        ? (available ? 'Biometric authentication ready' : 'Biometric authentication not available - using fallback')
+        : 'WebAuthn not supported - using password authentication'
+    };
   }
 
   /**

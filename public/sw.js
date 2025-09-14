@@ -21,8 +21,8 @@ const CORE_FILES = [
 
 // Image processing libraries and dependencies
 const CRITICAL_ASSETS = [
-  '/lovable-uploads/390e3f59-0f90-4390-a0eb-d404f3b7abaf.png',
-  '/lovable-uploads/6a7770e9-8262-4451-a248-72435e52e946.png'
+  '/images/favicon.png',
+  '/Uplode_img/6a7770e9-8262-4451-a248-72435e52e946.png'
 ];
 
 // Security headers for all responses
@@ -95,7 +95,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   // Handle images with cache-first strategy
-  if (request.destination === 'image' || url.pathname.includes('/lovable-uploads/')) {
+  if (request.destination === 'image' || url.pathname.includes('/images/') || url.pathname.includes('/Uplode_img/')) {
     event.respondWith(cacheFirstWithNetwork(request, IMAGES_CACHE));
     return;
   }
@@ -402,15 +402,15 @@ self.addEventListener('push', (event) => {
   
   const options = {
     body: data.body,
-    icon: '/lovable-uploads/390e3f59-0f90-4390-a0eb-d404f3b7abaf.png',
-    badge: '/lovable-uploads/390e3f59-0f90-4390-a0eb-d404f3b7abaf.png',
+    icon: '/images/favicon.png',
+    badge: '/images/favicon.png',
     data: data.data,
     requireInteraction: data.priority === 'high',
     actions: [
       {
         action: 'view',
         title: 'View Details',
-        icon: '/lovable-uploads/390e3f59-0f90-4390-a0eb-d404f3b7abaf.png'
+        icon: '/images/favicon.png'
       },
       {
         action: 'dismiss',

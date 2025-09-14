@@ -2,6 +2,11 @@
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
+import './utils/theme/forceDarkTheme';
+import { initializeDarkTheme } from './config/darkTheme';
+
+// Initialize dark theme before rendering
+initializeDarkTheme();
 
 // Get the root element and ensure it exists
 const rootElement = document.getElementById("root");

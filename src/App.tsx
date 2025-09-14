@@ -23,6 +23,9 @@ import Dashboard from '@/pages/Dashboard';
 import Metadata from '@/pages/Metadata';
 import AdminConfig from '@/pages/AdminConfig';
 import NotFound from '@/pages/NotFound';
+import TestingDashboard from '@/components/testing/TestingDashboard';
+import SecurityComplianceValidator from '@/components/compliance/SecurityComplianceValidator';
+import LogoTest from '@/components/LogoTest';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -56,6 +59,9 @@ const AppContent = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/metadata" element={<Metadata />} />
         <Route path="/admin" element={<AdminConfig />} />
+        <Route path="/testing" element={<TestingDashboard />} />
+        <Route path="/compliance" element={<SecurityComplianceValidator />} />
+        <Route path="/logo-test" element={<LogoTest />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

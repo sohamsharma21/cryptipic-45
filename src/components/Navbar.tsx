@@ -11,11 +11,14 @@ import {
   Info,
   LayoutDashboard,
   Book,
+  TestTube,
+  Shield,
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import ProfileButton from './ProfileButton';
 import UserManualButton from './UserManualButton';
+import Logo from './Logo';
 import { useTheme } from '@/context/ThemeContext';
 
 interface NavLinkProps {
@@ -72,15 +75,8 @@ const Navbar = () => {
     }>
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" className={`flex items-center space-x-2 ${isDarkMode ? 'text-white' : 'text-crypti-darkBg'}`}>
-            <div className="w-8 h-8 relative">
-              <img 
-                src="/lovable-uploads/6a7770e9-8262-4451-a248-72435e52e946.png" 
-                alt="CryptiPic Logo" 
-                className="w-full h-full object-contain animate-pulse"
-              />
-            </div>
-            <span className="font-bold text-xl">CryptiPic</span>
+          <Link to="/" className={`${isDarkMode ? 'text-white' : 'text-crypti-darkBg'}`}>
+            <Logo size="md" showText={true} />
           </Link>
 
           {/* Desktop Navigation */}
@@ -89,6 +85,8 @@ const Navbar = () => {
             <NavLink to="/hide">Hide Message</NavLink>
             <NavLink to="/reveal">Reveal Message</NavLink>
             <NavLink to="/dashboard">Dashboard</NavLink>
+            <NavLink to="/testing">Testing</NavLink>
+            <NavLink to="/compliance">Compliance</NavLink>
             <NavLink to="/about">About</NavLink>
           </div>
 
@@ -142,6 +140,14 @@ const Navbar = () => {
                   <MobileNavLink to="/dashboard" onClick={() => setIsMenuOpen(false)}>
                     <LayoutDashboard className="h-5 w-5 mr-2 text-crypti-neon" />
                     Dashboard
+                  </MobileNavLink>
+                  <MobileNavLink to="/testing" onClick={() => setIsMenuOpen(false)}>
+                    <TestTube className="h-5 w-5 mr-2 text-crypti-neon" />
+                    Testing
+                  </MobileNavLink>
+                  <MobileNavLink to="/compliance" onClick={() => setIsMenuOpen(false)}>
+                    <Shield className="h-5 w-5 mr-2 text-crypti-neon" />
+                    Compliance
                   </MobileNavLink>
                   <MobileNavLink to="/about" onClick={() => setIsMenuOpen(false)}>
                     <Info className="h-5 w-5 mr-2 text-crypti-neon" />
