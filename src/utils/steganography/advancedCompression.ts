@@ -3,8 +3,10 @@
  * Implements Huffman coding and other compression techniques to optimize payload size
  */
 
+import { CompressionAlgorithm } from './types';
+
 export interface CompressionOptions {
-  algorithm: 'huffman' | 'rle' | 'lzw' | 'hybrid';
+  algorithm: CompressionAlgorithm;
   level: number; // 1-9, higher = better compression
   adaptiveThreshold?: number;
 }

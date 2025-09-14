@@ -24,6 +24,7 @@ export type CompressionAlgorithm =
   | 'none'
   | 'huffman' 
   | 'rle' 
+  | 'lzw'
   | 'hybrid'
   | 'adaptive';
 
