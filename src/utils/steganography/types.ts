@@ -65,7 +65,7 @@ export type SteganographyOptions = {
 };
 
 export const DEFAULT_OPTIONS: SteganographyOptions = {
-  algorithm: 'adaptive-hybrid',
+  algorithm: 'lsb',
   encryption: {
     algorithm: 'enhanced-aes256',
     strength: 256,

@@ -135,7 +135,10 @@ export const encodeMessage = async (
             'dct': '0001',
             'dwt': '0010',
             'multibit-lsb': '0011',
-            'mobile-optimized': '0100'
+            'mobile-optimized': '0100',
+            'chaotic-lsb': '0101',
+            'hybrid-dct-dwt': '0110',
+            'adaptive-hybrid': '0111'
           }[finalOptions.algorithm] || '0000';
           
           debugLog(`Using algorithm ID: ${algorithmId}`, null, finalOptions);

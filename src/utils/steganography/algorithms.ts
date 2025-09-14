@@ -92,8 +92,9 @@ export const applyEncodingAlgorithm = (
       // Mobile optimized encoding
       encodeMobileOptimized(data, binary, offset, options);
       return data;
-    } else if (options.algorithm === 'chaotic-lsb' || options.algorithm === 'adaptive-hybrid') {
-      // Use enhanced chaotic LSB for new algorithms
+    } else if (options.algorithm === 'chaotic-lsb') {
+      // Enhanced chaotic LSB with pattern obfuscation
+      debugLog('Using chaotic LSB encoding', null, options);
       for (let i = 0; i < binary.length; i++) {
         if (offset >= data.length) {
           throw new Error('Image is not large enough for this message');
@@ -103,6 +104,26 @@ export const applyEncodingAlgorithm = (
         offset += 2; // Skip every other pixel for security
       }
       return data;
+    } else if (options.algorithm === 'adaptive-hybrid') {
+      // Adaptive hybrid algorithm - combines multiple techniques
+      debugLog('Using adaptive hybrid encoding', null, options);
+      for (let i = 0; i < binary.length; i++) {
+        if (offset >= data.length) {
+          throw new Error('Image is not large enough for this message');
+        }
+        const bit = parseInt(binary[i]);
+        // Use different bit positions based on pixel position for better security
+        const bitPosition = (offset % 3) + 1; // Use bits 1, 2, or 3
+        const mask = ~(1 << (bitPosition - 1)) & 0xFF;
+        data[offset] = (data[offset] & mask) | (bit << (bitPosition - 1));
+        offset += 1;
+      }
+      return data;
+    } else if (options.algorithm === 'hybrid-dct-dwt') {
+      // Hybrid DCT-DWT algorithm
+      debugLog('Using hybrid DCT-DWT encoding', null, options);
+      // For now, fallback to DCT encoding
+      return dctEncode(data, binary, canvasWidth, canvasHeight);
     } else if (options.algorithm === 'multibit-lsb') {
       // Multi-bit LSB - multiple bits per byte
       const bitDepth = options.capacity || 1;
@@ -164,6 +185,40 @@ export const applyDecodingAlgorithm = (
     } else if (algorithm === 'dwt') {
       // DWT decoding
       return dwtDecode(data, canvasWidth, canvasHeight);
+    } else if (algorithm === 'chaotic-lsb') {
+      // Enhanced chaotic LSB decoding
+      debugLog('Using chaotic LSB decoding', null, options);
+      let binary = '';
+      for (let i = 0; i < messageLength; i++) {
+        if (offset >= data.length) {
+          break;
+        }
+        
+        binary += (data[offset] & 1).toString();
+        offset += 2; // Skip every other pixel for security
+      }
+      return binary;
+    } else if (algorithm === 'adaptive-hybrid') {
+      // Adaptive hybrid decoding
+      debugLog('Using adaptive hybrid decoding', null, options);
+      let binary = '';
+      for (let i = 0; i < messageLength; i++) {
+        if (offset >= data.length) {
+          break;
+        }
+        
+        // Extract bit from different positions based on pixel position
+        const bitPosition = (offset % 3) + 1; // Use bits 1, 2, or 3
+        const bit = (data[offset] >> (bitPosition - 1)) & 1;
+        binary += bit.toString();
+        offset += 1;
+      }
+      return binary;
+    } else if (algorithm === 'hybrid-dct-dwt') {
+      // Hybrid DCT-DWT decoding
+      debugLog('Using hybrid DCT-DWT decoding', null, options);
+      // For now, fallback to DCT decoding
+      return dctDecode(data, messageLength, canvasWidth, canvasHeight);
     }
     
     throw new Error(`Unsupported algorithm: ${algorithm}`);

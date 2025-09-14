@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptiPic Steganography Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #0f172a;
+            color: white;
+        }
+        .test-section {
+            background-color: #1e293b;
+            border: 1px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .test-link {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            background-color: #334155;
+            border: 1px solid #00ffff;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #00ffff;
+            transition: all 0.3s;
+        }
+        .test-link:hover {
+            background-color: #475569;
+            transform: translateY(-2px);
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        .success { background-color: #10b981; color: white; }
+        .warning { background-color: #f59e0b; color: white; }
+        .error { background-color: #ef4444; color: white; }
+        .info { background-color: #3b82f6; color: white; }
+        h1 { color: #00ffff; text-align: center; }
+        h2 { color: #00ffff; border-bottom: 2px solid #00ffff; padding-bottom: 10px; }
+        .algorithm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .algorithm-card {
+            background-color: #334155;
+            border: 1px solid #00ffff;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        .algorithm-card h3 {
+            color: #00ffff;
+            margin: 0 0 10px 0;
+        }
+        .test-steps {
+            background-color: #1e293b;
+            border-left: 4px solid #00ffff;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .test-steps ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .test-steps li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔐 CryptiPic Steganography Test Suite</h1>
+    
+    <div class="test-section">
+        <h2>🚀 Quick Access Links</h2>
+        <a href="http://localhost:8081" class="test-link">🏠 Home Page</a>
+        <a href="http://localhost:8081/hide" class="test-link">🔒 Hide Message</a>
+        <a href="http://localhost:8081/reveal" class="test-link">🔓 Reveal Message</a>
+        <a href="http://localhost:8081/metadata" class="test-link">📊 Metadata Viewer</a>
+        <a href="http://localhost:8081/testing" class="test-link">🧪 Testing Dashboard</a>
+        <a href="http://localhost:8081/compliance" class="test-link">🛡️ Security Compliance</a>
+    </div>
+
+    <div class="test-section">
+        <h2>🧪 Steganography Algorithm Tests</h2>
+        <div class="algorithm-grid">
+            <div class="algorithm-card">
+                <h3>LSB</h3>
+                <p>Basic Least Significant Bit</p>
+                <span class="status success">✅ Ready</span>
+            </div>
+            <div class="algorithm-card">
+                <h3>DCT</h3>
+                <p>Discrete Cosine Transform</p>
+                <span class="status success">✅ Ready</span>
+            </div>
+            <div class="algorithm-card">
+                <h3>DWT</h3>
+                <p>Discrete Wavelet Transform</p>
+                <span class="status success">✅ Ready</span>
+            </div>
+            <div class="algorithm-card">
+                <h3>Multi-bit LSB</h3>
+                <p>Enhanced LSB</p>
+                <span class="status success">✅ Ready</span>
+            </div>
+            <div class="algorithm-card">
+                <h3>Mobile Optimized</h3>
+                <p>Mobile-friendly</p>
+                <span class="status success">✅ Ready</span>
+            </div>
+            <div class="algorithm-card">
+                <h3>Chaotic LSB</h3>
+                <p>Pattern obfuscation</p>
+                <span class="status success">✅ Ready</span>
+            </div>
+            <div class="algorithm-card">
+                <h3>Hybrid DCT-DWT</h3>
+                <p>Combined approach</p>
+                <span class="status success">✅ Ready</span>
+            </div>
+            <div class="algorithm-card">
+                <h3>Adaptive Hybrid</h3>
+                <p>Variable bit positions</p>
+                <span class="status success">✅ Ready</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 Basic Test Procedure</h2>
+        <div class="test-steps">
+            <h3>Step 1: Hide Message</h3>
+            <ol>
+                <li>Go to <a href="http://localhost:8081/hide" style="color: #00ffff;">Hide Page</a></li>
+                <li>Upload a test image (PNG/JPG)</li>
+                <li>Enter message: "Hello World Test"</li>
+                <li>Select algorithm: LSB</li>
+                <li>Click "Hide Message"</li>
+                <li>Download the encoded image</li>
+            </ol>
+        </div>
+        
+        <div class="test-steps">
+            <h3>Step 2: Reveal Message</h3>
+            <ol>
+                <li>Go to <a href="http://localhost:8081/reveal" style="color: #00ffff;">Reveal Page</a></li>
+                <li>Upload the encoded image from Step 1</li>
+                <li>Click "Reveal Message"</li>
+                <li>Verify message matches: "Hello World Test"</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔍 Advanced Testing</h2>
+        <div class="test-steps">
+            <h3>Algorithm Testing</h3>
+            <ol>
+                <li>Test each algorithm with the same image and message</li>
+                <li>Verify encoding/decoding works for all algorithms</li>
+                <li>Check image quality after encoding</li>
+                <li>Test with different image sizes</li>
+            </ol>
+        </div>
+        
+        <div class="test-steps">
+            <h3>Edge Case Testing</h3>
+            <ol>
+                <li>Test with large messages (>100 characters)</li>
+                <li>Test with special characters: !@#$%^&*()</li>
+                <li>Test with Unicode: हिंदी 中文 العربية</li>
+                <li>Test with different image formats</li>
+                <li>Test error handling with invalid files</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 Expected Results</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+            <div style="background-color: #10b981; padding: 15px; border-radius: 8px;">
+                <h3 style="color: white; margin: 0 0 10px 0;">✅ Success Indicators</h3>
+                <ul style="margin: 0; color: white;">
+                    <li>Messages encode/decode correctly</li>
+                    <li>Image quality maintained</li>
+                    <li>All algorithms work</li>
+                    <li>No console errors</li>
+                    <li>Fast processing times</li>
+                </ul>
+            </div>
+            <div style="background-color: #ef4444; padding: 15px; border-radius: 8px;">
+                <h3 style="color: white; margin: 0 0 10px 0;">❌ Failure Indicators</h3>
+                <ul style="margin: 0; color: white;">
+                    <li>Messages don't decode</li>
+                    <li>Image corruption</li>
+                    <li>Console errors</li>
+                    <li>Slow processing</li>
+                    <li>Algorithm failures</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🛠️ Troubleshooting</h2>
+        <div class="test-steps">
+            <h3>If Messages Don't Reveal:</h3>
+            <ol>
+                <li>Check algorithm selection matches</li>
+                <li>Verify image wasn't corrupted</li>
+                <li>Check browser console for errors</li>
+                <li>Try different algorithm</li>
+                <li>Test with smaller message</li>
+            </ol>
+        </div>
+        
+        <div class="test-steps">
+            <h3>If Errors Occur:</h3>
+            <ol>
+                <li>Check browser console (F12)</li>
+                <li>Verify image format (PNG/JPG)</li>
+                <li>Check image size (not too small)</li>
+                <li>Try refreshing the page</li>
+                <li>Clear browser cache</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📱 Mobile Testing</h2>
+        <p>Test the application on mobile devices:</p>
+        <ul>
+            <li>Touch-friendly interface</li>
+            <li>Mobile-optimized algorithms</li>
+            <li>Responsive design</li>
+            <li>PWA support</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>🎯 Quick Test Checklist</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+            <label style="display: flex; align-items: center; padding: 10px; background-color: #334155; border-radius: 5px;">
+                <input type="checkbox" style="margin-right: 10px;"> Hide message works
+            </label>
+            <label style="display: flex; align-items: center; padding: 10px; background-color: #334155; border-radius: 5px;">
+                <input type="checkbox" style="margin-right: 10px;"> Reveal message works
+            </label>
+            <label style="display: flex; align-items: center; padding: 10px; background-color: #334155; border-radius: 5px;">
+                <input type="checkbox" style="margin-right: 10px;"> All algorithms functional
+            </label>
+            <label style="display: flex; align-items: center; padding: 10px; background-color: #334155; border-radius: 5px;">
+                <input type="checkbox" style="margin-right: 10px;"> No console errors
+            </label>
+            <label style="display: flex; align-items: center; padding: 10px; background-color: #334155; border-radius: 5px;">
+                <input type="checkbox" style="margin-right: 10px;"> Image quality maintained
+            </label>
+            <label style="display: flex; align-items: center; padding: 10px; background-color: #334155; border-radius: 5px;">
+                <input type="checkbox" style="margin-right: 10px;"> Large messages supported
+            </label>
+            <label style="display: flex; align-items: center; padding: 10px; background-color: #334155; border-radius: 5px;">
+                <input type="checkbox" style="margin-right: 10px;"> Different formats work
+            </label>
+            <label style="display: flex; align-items: center; padding: 10px; background-color: #334155; border-radius: 5px;">
+                <input type="checkbox" style="margin-right: 10px;"> Error handling works
+            </label>
+            <label style="display: flex; align-items: center; padding: 10px; background-color: #334155; border-radius: 5px;">
+                <input type="checkbox" style="margin-right: 10px;"> Performance acceptable
+            </label>
+            <label style="display: flex; align-items: center; padding: 10px; background-color: #334155; border-radius: 5px;">
+                <input type="checkbox" style="margin-right: 10px;"> Mobile responsive
+            </label>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📈 Performance Benchmarks</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <div style="background-color: #334155; padding: 15px; border-radius: 8px; text-align: center;">
+                <h3 style="color: #00ffff; margin: 0 0 10px 0;">Small Images</h3>
+                <p style="margin: 0; color: white;">< 1MB: < 2 seconds</p>
+            </div>
+            <div style="background-color: #334155; padding: 15px; border-radius: 8px; text-align: center;">
+                <h3 style="color: #00ffff; margin: 0 0 10px 0;">Medium Images</h3>
+                <p style="margin: 0; color: white;">1-5MB: < 5 seconds</p>
+            </div>
+            <div style="background-color: #334155; padding: 15px; border-radius: 8px; text-align: center;">
+                <h3 style="color: #00ffff; margin: 0 0 10px 0;">Large Images</h3>
+                <p style="margin: 0; color: white;">> 5MB: < 10 seconds</p>
+            </div>
+            <div style="background-color: #334155; padding: 15px; border-radius: 8px; text-align: center;">
+                <h3 style="color: #00ffff; margin: 0 0 10px 0;">Message Length</h3>
+                <p style="margin: 0; color: white;">Up to 10KB supported</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🌐 Browser Compatibility</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <span class="status success">✅ Chrome (recommended)</span>
+            <span class="status success">✅ Firefox</span>
+            <span class="status success">✅ Edge</span>
+            <span class="status warning">⚠️ Safari (limited)</span>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers for test links
+            const testLinks = document.querySelectorAll('.test-link');
+            testLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Add visual feedback
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+
+            // Add checkbox functionality
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const label = this.parentElement;
+                    if (this.checked) {
+                        label.style.backgroundColor = '#10b981';
+                        label.style.color = 'white';
+                    } else {
+                        label.style.backgroundColor = '#334155';
+                        label.style.color = 'white';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

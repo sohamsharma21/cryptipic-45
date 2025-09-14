@@ -24,7 +24,8 @@ import {
   Database,
   Network,
   Smartphone,
-  Monitor
+  Monitor,
+  RefreshCw
 } from 'lucide-react';
 
 interface ComplianceCheck {

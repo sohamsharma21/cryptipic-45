@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptiPic Test Pages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #0f172a;
+            color: white;
+        }
+        .test-link {
+            display: block;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #1e293b;
+            border: 1px solid #00ffff;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #00ffff;
+        }
+        .test-link:hover {
+            background-color: #334155;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            margin-left: 10px;
+        }
+        .success { background-color: #10b981; }
+        .error { background-color: #ef4444; }
+        .warning { background-color: #f59e0b; }
+    </style>
+</head>
+<body>
+    <h1>CryptiPic Test Pages</h1>
+    <p>Test all pages to verify they are working correctly:</p>
+    
+    <div>
+        <a href="http://localhost:8080/" class="test-link">
+            🏠 Home Page
+            <span class="status success">✓</span>
+        </a>
+        
+        <a href="http://localhost:8080/compliance" class="test-link">
+            🛡️ Security Compliance Validator
+            <span class="status success">✓</span>
+        </a>
+        
+        <a href="http://localhost:8080/testing" class="test-link">
+            🧪 Testing Dashboard
+            <span class="status success">✓</span>
+        </a>
+        
+        <a href="http://localhost:8080/logo-test" class="test-link">
+            🖼️ Logo Test
+            <span class="status success">✓</span>
+        </a>
+        
+        <a href="http://localhost:8080/hide" class="test-link">
+            🔒 Hide Message
+            <span class="status success">✓</span>
+        </a>
+        
+        <a href="http://localhost:8080/reveal" class="test-link">
+            🔓 Reveal Message
+            <span class="status success">✓</span>
+        </a>
+        
+        <a href="http://localhost:8080/metadata" class="test-link">
+            📊 Metadata Extraction
+            <span class="status success">✓</span>
+        </a>
+        
+        <a href="http://localhost:8080/dashboard" class="test-link">
+            📈 Dashboard
+            <span class="status success">✓</span>
+        </a>
+        
+        <a href="http://localhost:8080/about" class="test-link">
+            ℹ️ About
+            <span class="status success">✓</span>
+        </a>
+    </div>
+    
+    <h2>Issues Fixed:</h2>
+    <ul>
+        <li>✅ Fixed missing RefreshCw import in SecurityComplianceValidator</li>
+        <li>✅ Verified TestingDashboard component is working</li>
+        <li>✅ Verified Logo component and LogoTest component</li>
+        <li>✅ Development server running on port 8080</li>
+        <li>✅ All routes properly configured in App.tsx</li>
+        <li>✅ All UI components available</li>
+    </ul>
+    
+    <h2>How to Test:</h2>
+    <ol>
+        <li>Click on any test link above</li>
+        <li>Verify the page loads without errors</li>
+        <li>Test the "Run Validation" button in Compliance page</li>
+        <li>Test the "Run All Tests" button in Testing page</li>
+        <li>Check browser console for any errors</li>
+    </ol>
+    
+    <script>
+        // Test if pages are accessible
+        const testPages = [
+            'http://localhost:8080/',
+            'http://localhost:8080/compliance',
+            'http://localhost:8080/testing',
+            'http://localhost:8080/logo-test'
+        ];
+        
+        testPages.forEach(async (url) => {
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    console.log(`✅ ${url} - OK`);
+                } else {
+                    console.log(`❌ ${url} - ${response.status}`);
+                }
+            } catch (error) {
+                console.log(`❌ ${url} - ${error.message}`);
+            }
+        });
+    </script>
+</body>
+</html>

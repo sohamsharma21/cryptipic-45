@@ -91,7 +91,10 @@ export const decodeMessage = async (
               '0001': 'dct',
               '0010': 'dwt',
               '0011': 'multibit-lsb',
-              '0100': 'mobile-optimized'
+              '0100': 'mobile-optimized',
+              '0101': 'chaotic-lsb',
+              '0110': 'hybrid-dct-dwt',
+              '0111': 'adaptive-hybrid'
             };
             
             const algorithm = algorithmMap[algorithmIdBinary] || 'lsb';

@@ -13,6 +13,7 @@ import {
   Book,
   TestTube,
   Shield,
+  Search,
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -87,6 +88,7 @@ const Navbar = () => {
             <NavLink to="/dashboard">Dashboard</NavLink>
             <NavLink to="/testing">Testing</NavLink>
             <NavLink to="/compliance">Compliance</NavLink>
+            <NavLink to="/security-audit">Security Audit</NavLink>
             <NavLink to="/about">About</NavLink>
           </div>
 
@@ -148,6 +150,10 @@ const Navbar = () => {
                   <MobileNavLink to="/compliance" onClick={() => setIsMenuOpen(false)}>
                     <Shield className="h-5 w-5 mr-2 text-crypti-neon" />
                     Compliance
+                  </MobileNavLink>
+                  <MobileNavLink to="/security-audit" onClick={() => setIsMenuOpen(false)}>
+                    <Search className="h-5 w-5 mr-2 text-crypti-neon" />
+                    Security Audit
                   </MobileNavLink>
                   <MobileNavLink to="/about" onClick={() => setIsMenuOpen(false)}>
                     <Info className="h-5 w-5 mr-2 text-crypti-neon" />

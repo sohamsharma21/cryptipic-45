@@ -25,6 +25,7 @@ import AdminConfig from '@/pages/AdminConfig';
 import NotFound from '@/pages/NotFound';
 import TestingDashboard from '@/components/testing/TestingDashboard';
 import SecurityComplianceValidator from '@/components/compliance/SecurityComplianceValidator';
+import SecurityAuditDashboard from '@/components/security/SecurityAuditDashboard';
 import LogoTest from '@/components/LogoTest';
 
 const queryClient = new QueryClient({
@@ -61,6 +62,7 @@ const AppContent = () => {
         <Route path="/admin" element={<AdminConfig />} />
         <Route path="/testing" element={<TestingDashboard />} />
         <Route path="/compliance" element={<SecurityComplianceValidator />} />
+        <Route path="/security-audit" element={<SecurityAuditDashboard />} />
         <Route path="/logo-test" element={<LogoTest />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

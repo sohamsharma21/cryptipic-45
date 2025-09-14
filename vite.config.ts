@@ -8,6 +8,18 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    // Security configurations to mitigate esbuild vulnerability
+    strictPort: true,
+    cors: {
+      origin: ['http://localhost:8080', 'http://127.0.0.1:8080'],
+      credentials: true,
+    },
+    headers: {
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
+      'X-XSS-Protection': '1; mode=block',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+    },
   },
   plugins: [
     react(),
